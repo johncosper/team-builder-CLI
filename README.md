@@ -1,2 +1,13 @@
 # team-builder-CLI
-As a manager I want to generate a webpage that displays my team's basic info so that I have quick access to emails and GitHub profiles
+
+# Description
+A Node command line application to quickly build and update your company team roster.
+
+# Usage
+Command to execute application: node index.js
+
+# Testing
+Command to execute test: npm test
+
+# License
+Licensed under 
