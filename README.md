@@ -1,20 +1,20 @@
 # team-builder-CLI
 
-# Description
+## Description
 A Node command line application to quickly build and update your company team roster.
 
-# Dependencies
+## Dependencies
 - jest
 - inquirer
 
-# Usage
+## Usage
 Command to execute application: node index.js
 
-# Testing
+## Testing
 Command to execute test: npm test
 
-# License
+## License
 Licensed under the [MIT](https://github.com/johncosper/team-builder-CLI/blob/master/LICENSE.txt) license.
 
-# Feedback
+## Feedback
 For questions or feedback you can reach me at johngcosper@gmail.com
