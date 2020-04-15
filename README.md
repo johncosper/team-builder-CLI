@@ -10,4 +10,4 @@ Command to execute application: node index.js
 Command to execute test: npm test
 
 # License
-Licensed under 
+Licensed under the [MIT](https://github.com/johncosper/team-builder-CLI/blob/master/LICENSE.txt) license.
