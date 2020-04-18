@@ -1,0 +1,26 @@
+{
+  "name": "team-builder-cli",
+  "version": "1.0.0",
+  "description": "Command line application to quickly build your company team roster",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johncosper/team-builder-CLI.git"
+  },
+  "author": "John Cosper",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johncosper/team-builder-CLI/issues"
+  },
+  "homepage": "https://github.com/johncosper/team-builder-CLI#readme",
+  "dependencies": {
+    "JSON": "^1.0.0",
+    "fs": "0.0.1-security",
+    "inquirer": "^7.1.0",
+    "jest": "^25.3.0",
+    "path": "^0.12.7"
+  }
+}
