@@ -11,8 +11,20 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const generateHtml = require('./generateHtml');
 
+let response1 = null;
+let response2 = null;
+
+
 async function promptUser() {
-    const response1 = await inquirer.prompt([
+    inquirer.registerPrompt('recursive', require('inquirer-recursive'));
+    await inquirer.prompt([
+        {
+            type: 'recursive',
+            message: 'Add New Employee?',
+            name: 'intiate'
+        }
+    ])
+    response1 = await inquirer.prompt([
         {
             type: 'list',
             message: 'Select Role',
@@ -20,8 +32,6 @@ async function promptUser() {
             name: 'role'
         },
     ]);
-
-    let response2 = null;
 
     if (response1.role === 0) {
         response2 = await inquirer.prompt([
@@ -113,13 +123,20 @@ async function promptUser() {
     };
     
     if (response2.continue === 0) {
-        return response1;
+        promptUser();
     } else if (response1.role === 3 || response2.continue === 1) {
         return;
     }
+};
+
+promptUser().then(e)
+
+function e() {
+    console.log(response1.role);
+    console.log(response2);
+    console.log(repsonse2.continue);
 }
 
-promptUser();
 
 // const empArray = [];
 
@@ -128,6 +145,8 @@ promptUser();
 // let managerTemplate = fs.readFileSync('./templates/manager.html', 'utf8');
 // let engineerTemplate = fs.readFileSync('./templates/engineer.html', 'utf8');
 // let internTemplate = fs.readFileSync('./templates/intern.html', 'utf8');
+
+// function replacePlaceholders(managerTemplate)
 
 
 

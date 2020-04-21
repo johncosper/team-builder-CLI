@@ -20,6 +20,7 @@
     "JSON": "^1.0.0",
     "fs": "0.0.1-security",
     "inquirer": "^7.1.0",
+    "inquirer-recursive": "0.0.6",
     "jest": "^25.3.0",
     "path": "^0.12.7"
   }
