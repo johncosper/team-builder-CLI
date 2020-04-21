@@ -14,26 +14,17 @@ const generateHtml = require('./generateHtml');
 let response1 = null;
 let response2 = null;
 
-
 async function promptUser() {
-    inquirer.registerPrompt('recursive', require('inquirer-recursive'));
-    await inquirer.prompt([
-        {
-            type: 'recursive',
-            message: 'Add New Employee?',
-            name: 'intiate'
-        }
-    ])
     response1 = await inquirer.prompt([
         {
             type: 'list',
             message: 'Select Role',
-            choices: [{ name: 'Manager', value: 0}, { name: 'Engineer', value: 1}, { name: 'Intern', value: 2}, { name: 'Exit', value: 3}],
+            choices: [{ name: 'Manager'}, { name: 'Engineer'}, { name: 'Intern'}],
             name: 'role'
         },
     ]);
 
-    if (response1.role === 0) {
+    if (response1.role === 'Manager') {
         response2 = await inquirer.prompt([
             {
                 type: 'input',
@@ -54,15 +45,9 @@ async function promptUser() {
                 type: 'input',
                 message: 'Office Number',
                 name: 'office'
-            },
-            {
-                type: 'list',
-                message: 'Create Additional Employees?',
-                choices: [{ name: 'Yes', value: 0 }, { name: 'No', value: 1 }],
-                name: 'continue'
             }
         ])
-    } else if (response1.role === 1) {
+    } else if (response1.role === 'Engineer') {
         response2 = await inquirer.prompt([
             {
                 type: 'input',
@@ -83,15 +68,9 @@ async function promptUser() {
                 type: 'input',
                 message: 'Github Username',
                 name: 'github'
-            },
-            {
-                type: 'list',
-                message: 'Create Additional Employees?',
-                choices: [{ name: 'Yes', value: 0 }, { name: 'No', value: 1 }],
-                name: 'continue'
             }
         ])
-    } else if (response1.role === 2) {
+    } else if (response1.role === 'Intern') {
         response2 = await inquirer.prompt([
             {
                 type: 'input',
@@ -112,53 +91,38 @@ async function promptUser() {
                 type: 'input',
                 message: 'University',
                 name: 'school'
-            },
-            {
-                type: 'list',
-                message: 'Create Additional Employees?',
-                choices: [{ name: 'Yes', value: 0 }, { name: 'No', value: 1 }],
-                name: 'continue'
             }
         ])
     };
-    
-    if (response2.continue === 0) {
-        promptUser();
-    } else if (response1.role === 3 || response2.continue === 1) {
-        return;
-    }
 };
 
-promptUser().then(e)
+promptUser().then(async function() {
 
-function e() {
-    console.log(response1.role);
+    console.log(response1);
     console.log(response2);
-    console.log(repsonse2.continue);
-}
 
+    const render = generateHtml(response1, response2)
 
-// const empArray = [];
+    async function i() {
+        let user = fs.writeFileSync('test.html', render, function(error) {
+            if (error) {
+                return console.log(error);
+            } else {
+                console.log('success')
+            }
+        });
+    }
 
-// let team = managerTemplate + engineerTemplate + internTemplate;
+    i();
 
-// let managerTemplate = fs.readFileSync('./templates/manager.html', 'utf8');
-// let engineerTemplate = fs.readFileSync('./templates/engineer.html', 'utf8');
-// let internTemplate = fs.readFileSync('./templates/intern.html', 'utf8');
+    async function e() {
+        let team = fs.readFileSync('./templates/main.html', 'utf8');
+        let user = fs.readFileSync('./test.html', 'utf8');
+        console.log(typeof user);
+        var result = team.replace('{team}', user);
+        fs.writeFileSync('./team.html', result, 'utf8');
+    }
 
-// function replacePlaceholders(managerTemplate)
+    e();
 
-
-
-    // const arryEmp = [new Employee(), new Employee];
-
-    // let managerTemp = fs.readFileSync('./templates/manager.html', "utf8");
-    // let engineerTemp = fs.readFileSync('./templates/engineer.html', "utf8");
-
-    // let team = managerTemp + engineerTemp +....;
-
-    //  = replacePlaceholders(managerTemp, "{{ name }}", manager.name);
-
-    // function replacePlaceholders(template, placholder, value) {
-    //     return template.replace(placholder, value);
-    // }
+});
