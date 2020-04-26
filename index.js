@@ -1,7 +1,6 @@
-const employee = require("./lib/employee");
-const manager = require("./lib/manager");
-const engineer = require("./lib/engineer");
-const intern = require("./lib/intern");
+const Manager = require("./lib/manager");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -11,21 +10,21 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const generateHtml = require('./generateHtml');
 
-let response1 = null;
-let response2 = null;
 
-async function promptUser() {
-    response1 = await inquirer.prompt([
+async function promptRole(roleName) {
+    return await inquirer.prompt([
         {
             type: 'list',
             message: 'Select Role',
-            choices: [{ name: 'Manager'}, { name: 'Engineer'}, { name: 'Intern'}],
+            choices: [{ name: 'Manager'}, { name: 'Engineer'}, { name: 'Intern'}, { name: 'Exit'}],
             name: 'role'
         },
     ]);
+}
 
-    if (response1.role === 'Manager') {
-        response2 = await inquirer.prompt([
+async function promptInfo(roleName) {
+    if (roleName === 'Manager') {
+        const response = await inquirer.prompt([
             {
                 type: 'input',
                 message: 'Name',
@@ -47,8 +46,9 @@ async function promptUser() {
                 name: 'office'
             }
         ])
-    } else if (response1.role === 'Engineer') {
-        response2 = await inquirer.prompt([
+        return new Manager(response.name, response.id, response.email, response.office);
+    } else if (roleName === 'Engineer') {
+        const response = await inquirer.prompt([
             {
                 type: 'input',
                 message: 'Name',
@@ -69,9 +69,10 @@ async function promptUser() {
                 message: 'Github Username',
                 name: 'github'
             }
-        ])
-    } else if (response1.role === 'Intern') {
-        response2 = await inquirer.prompt([
+        ]);
+        return new Engineer(response.name, response.id, response.email, response.github);
+    } else if (roleName === 'Intern') {
+        const response = await inquirer.prompt([
             {
                 type: 'input',
                 message: 'Name',
@@ -92,11 +93,57 @@ async function promptUser() {
                 message: 'University',
                 name: 'school'
             }
-        ])
+        ]);
+        return new Intern(response.name, response.id, response.email, response.school);
     };
 };
 
-promptUser().then(async function() {
+async function a() {
+    let response1 = {role: 'Manager'};
+    let response2 = await promptInfo(response1.role);
+    let empArr = [];
+    empArr.push(response2);
+
+    console.log(response2);
+
+    while (response1.role !== "Exit") {
+        response1 = await promptRole();
+        response2 = await promptInfo(response1.role);
+
+        if (response2) {
+            empArr.push(response2);
+            
+        };
+    };
+    console.log(empArr);
+    let roster = '';
+    let manager = fs.readFileSync('./template/manager.html', 'utf8');
+    let engineer = fs.readFileSync('./templates/engineer.html', 'utf8');
+    let intern = fs.readFileSync('./templates/intern.html', 'utf8');
+    roster += manager 
+    roster += engineer
+    roster += intern;
+    console.log(roster);
+}
+
+a();
+
+console.log(empArr);
+let roster = '';
+let manager = fs.readFileSync('./template/manager.html', 'utf8');
+let engineer = fs.readFileSync('./templates/engineer.html', 'utf8');
+let intern = fs.readFileSync('./templates/intern.html', 'utf8');
+roster += manager 
+roster += engineer
+roster += intern;
+console.log(roster);
+
+for (i = 0; i < empArr.length; i++) {
+
+}
+
+
+/*.then(async function() {
 
     console.log(response1);
     console.log(response2);
@@ -126,3 +173,4 @@ promptUser().then(async function() {
     e();
 
 });
+*/
