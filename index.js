@@ -111,37 +111,31 @@ async function a() {
         response2 = await promptInfo(response1.role);
 
         if (response2) {
-            empArr.push(response2);
-            
+            empArr.push(response1, response2);
+            empArr.forEach((person) => {
+                if (person.role === 'Manager') {
+                    console.log('yay');
+                    let managerTemp = fs.readFileSync('./templates/manager.html', 'utf8');
+                    let managerReplace = managerTemp.replace('{{ name }}', person.name);
+                    managerReplace += managerTemp.replace('{{ role }}', person.role);
+                    fs.writeFileSync('test.html', managerReplace, 'utf8');
+                }
+            });
         };
     };
     console.log(empArr);
-    let roster = '';
-    let manager = fs.readFileSync('./template/manager.html', 'utf8');
-    let engineer = fs.readFileSync('./templates/engineer.html', 'utf8');
-    let intern = fs.readFileSync('./templates/intern.html', 'utf8');
-    roster += manager 
-    roster += engineer
-    roster += intern;
-    console.log(roster);
 }
 
 a();
 
-console.log(empArr);
-let roster = '';
-let manager = fs.readFileSync('./template/manager.html', 'utf8');
-let engineer = fs.readFileSync('./templates/engineer.html', 'utf8');
-let intern = fs.readFileSync('./templates/intern.html', 'utf8');
-roster += manager 
-roster += engineer
-roster += intern;
-console.log(roster);
-
-for (i = 0; i < empArr.length; i++) {
-
-}
-
+// let manager = fs.readFileSync('./templates/manager', 'utf8');
+// let managerReplace = manager.replace('{{ name }}', empArr[i].name);
+// managerReplace += manager.replace('{{ role }}', ampArr[i].role);
+// managerReplace += manager.replace('{{ id }}', ampArr[i].id);
+// managerReplace += manager.replace('{{ email }}', ampArr[i].email);
+// managerReplace += manager.replace('{{ officeNumber }}', ampArr[i].office);
+// let managerResult = fs.writeFileSync('test.html', managerReplace, 'utf8');
+// console.log(managerResult);
 
 /*.then(async function() {
 
